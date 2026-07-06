@@ -1,5 +1,5 @@
 ---
 triple:          'arm64-apple-darwin'
-binary-path:     main
+binary-path:     '/Users/aidentsang/Pierce college Labs C++/CS216_L1_AT/main'
 relocations:     []
 ...

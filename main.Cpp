@@ -1,6 +1,3 @@
-// Aiden Tsang
-// Lab - Menu Driven Array Program
-
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -8,11 +5,11 @@
 #include <fstream>
 using namespace std;
 
-const string INPUT_FILE = "input.txt";
+const string INPUT_FILE = "in_numberList.txt";
+const string OUTPUT_FILE = "out_userChoices.txt";
 const int MAX_SIZE = 100;
 const int COL_WIDTH = 10;
 
-// ---- function prototypes ----
 void displayMenu();
 int getMenuChoice();
 void clearInputStream(const string& message);
@@ -40,6 +37,12 @@ int main()
 
     readData(INPUT_FILE, div5, count5, div7, count7, other, countOther, MAX_SIZE);
 
+    ofstream outFile(OUTPUT_FILE, ios::app);
+    if (!outFile)
+    {
+        cout << "\nWarning: could not open " << OUTPUT_FILE << " for writing.\n";
+    }
+
     bool quit = false;
     while (!quit)
     {
@@ -50,26 +53,42 @@ int main()
         {
         case 1:
             cout << "\n ARRAY CONTENTS AND STATISTICS \n";
+            outFile << "\n ARRAY CONTENTS AND STATISTICS \n";
             printArrayStats(cout, "Multiples of 5", div5, count5);
+            printArrayStats(outFile, "Multiples of 5", div5, count5);
             printArrayStats(cout, "Multiples of 7", div7, count7);
+            printArrayStats(outFile, "Multiples of 7", div7, count7);
             printArrayStats(cout, "Neither (other)", other, countOther);
+            printArrayStats(outFile, "Neither (other)", other, countOther);
             break;
         case 2:
             cout << "\n ARRAYS SORTED DESCENDING \n";
+            outFile << "\n ARRAYS SORTED DESCENDING \n";
             printSortedArray(cout, "Multiples of 5", div5, count5);
+            printSortedArray(outFile, "Multiples of 5", div5, count5);
             printSortedArray(cout, "Multiples of 7", div7, count7);
+            printSortedArray(outFile, "Multiples of 7", div7, count7);
             printSortedArray(cout, "Neither (other)", other, countOther);
+            printSortedArray(outFile, "Neither (other)", other, countOther);
             break;
         case 3:
-            cout << "\nQuitting program. Goodbye!\n";
-            quit = true;
+            cout << "\nAre you sure you want to quit? (y/n): ";
+            char confirm;
+            cin >> confirm;
+            if (confirm == 'y')
+            {
+                cout << "\nQuitting program. Goodbye!\n";
+                outFile << "\nQuitting program. Goodbye!\n";
+                quit = true;
+            }
             break;
         default:
-            cout << "\nInvalid choice. Please enter 1, 2, or 3.\n";
+            cout << "\nInvalid choice. Enter 1, 2, or 3.\n";
             break;
         }
     }
 
+    outFile.close();
     return 0;
 }
 
@@ -84,10 +103,10 @@ void displayMenu()
 
 int getMenuChoice()
 {
-    int choice;
+    int choice = 0;
     while (!(cin >> choice))
     {
-        clearInputStream("Invalid input. Please enter a number (1-3): ");
+        clearInputStream("Invalid input. Enter a number (1-3): ");
     }
     return choice;
 }
@@ -99,7 +118,6 @@ void clearInputStream(const string& message)
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
-// Reads the file once; stops adding to an array at maxSize instead of overflowing.
 void readData(const string& filename,
               int div5[], int& count5,
               int div7[], int& count7,
@@ -114,29 +132,29 @@ void readData(const string& filename,
         return;
     }
 
-    int value;
-    while (inFile >> value)
+    int val = 0;
+    while (inFile >> val)
     {
-        if (value % 5 == 0)
+        if (val % 5 == 0)
         {
             if (count5 < maxSize)
-                div5[count5++] = value;
+                div5[count5++] = val;
             else
-                cout << "\nWarning: multiples-of-5 array is full. Value " << value << " was dropped.\n";
+                cout << "\nWarning: multiples-of-5 array is full. Value " << val << " was dropped.\n";
         }
-        else if (value % 7 == 0)
+        else if (val % 7 == 0)
         {
             if (count7 < maxSize)
-                div7[count7++] = value;
+                div7[count7++] = val;
             else
-                cout << "\nWarning: multiples-of-7 array is full. Value " << value << " was dropped.\n";
+                cout << "\nWarning: multiples-of-7 array is full. Value " << val << " was dropped.\n";
         }
         else
         {
             if (countOther < maxSize)
-                other[countOther++] = value;
+                other[countOther++] = val;
             else
-                cout << "\nWarning: 'other' array is full. Value " << value << " was dropped.\n";
+                cout << "\nWarning: 'other' array is full. Value " << val << " was dropped.\n";
         }
     }
 
@@ -151,13 +169,11 @@ double sumArray(const int arr[], int size)
     return total;
 }
 
-// Caller must ensure size > 0.
 double averageArray(const int arr[], int size)
 {
     return sumArray(arr, size) / size;
 }
 
-// Caller must ensure size > 0. Sorts a local copy so arr's order is left untouched.
 double medianArray(const int arr[], int size)
 {
     int sorted[MAX_SIZE];
@@ -171,7 +187,6 @@ double medianArray(const int arr[], int size)
         return sorted[mid];
 }
 
-// Swaps inline (no swap function) since bubble sort is already slow.
 void bubbleSortDescending(int arr[], int size)
 {
     for (int i = 0; i < size - 1; i++)
@@ -220,13 +235,13 @@ void printArrayStats(ostream& out, const string& label, const int arr[], int siz
     }
 
     double sum = sumArray(arr, size);
-    double average = averageArray(arr, size);
-    double median = medianArray(arr, size);
+    double avg = averageArray(arr, size);
+    double med = medianArray(arr, size);
 
     out << fixed << setprecision(2);
-    out << left << setw(20) << "Sum:" << right << setw(COL_WIDTH) << sum << "\n";
-    out << left << setw(20) << "Average:" << right << setw(COL_WIDTH) << average << "\n";
-    out << left << setw(20) << "Median:" << right << setw(COL_WIDTH) << median << "\n";
+    out << left << setw(20) << "Sum:"     << right << setw(COL_WIDTH) << sum << "\n";
+    out << left << setw(20) << "Average:" << right << setw(COL_WIDTH) << avg << "\n";
+    out << left << setw(20) << "Median:"  << right << setw(COL_WIDTH) << med << "\n";
 }
 
 void printSortedArray(ostream& out, const string& label, const int arr[], int size)
@@ -239,8 +254,9 @@ void printSortedArray(ostream& out, const string& label, const int arr[], int si
     printArrayValues(out, sorted, size);
 }
 
-/*
-Test 1: 
+/* TEST RUN
+aidentsang@Aidens-MacBook-Pro CS216_L1_AT % "/Users/aidentsang/Pierce college Labs C++/CS216_L1_AT/main"
+
  MAIN MENU 
 1. Print arrays with average, median, and sum
 2. Print arrays sorted in descending order
@@ -290,16 +306,7 @@ Values:                     39        33        18        17         8
 3. Quit
 Enter your choice: 3
 
-Quitting program. Goodbye!
-
-Test 2: 
- MAIN MENU 
-1. Print arrays with average, median, and sum
-2. Print arrays sorted in descending order
-3. Quit
-Enter your choice: 1000
-
-Invalid choice. Please enter 1, 2, or 3.
+Are you sure you want to quit? (y/n): n
 
  MAIN MENU 
 1. Print arrays with average, median, and sum
@@ -348,7 +355,34 @@ Median:                  18.00
 1. Print arrays with average, median, and sum
 2. Print arrays sorted in descending order
 3. Quit
+Enter your choice: `
+Invalid input. Enter a number (1-3): 0
+
+Invalid choice. Enter 1, 2, or 3.
+
+ MAIN MENU 
+1. Print arrays with average, median, and sum
+2. Print arrays sorted in descending order
+3. Quit
+Enter your choice: 0
+
+Invalid choice. Enter 1, 2, or 3.
+
+ MAIN MENU 
+1. Print arrays with average, median, and sum
+2. Print arrays sorted in descending order
+3. Quit
+Enter your choice: -3
+
+Invalid choice. Enter 1, 2, or 3.
+
+ MAIN MENU 
+1. Print arrays with average, median, and sum
+2. Print arrays sorted in descending order
+3. Quit
 Enter your choice: 3
 
+Are you sure you want to quit? (y/n): y
+
 Quitting program. Goodbye!
-*/
+aidentsang@Aidens-MacBook-Pro CS216_L1_AT % */

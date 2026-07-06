@@ -1,0 +1,64 @@
+
+ ARRAY CONTENTS AND STATISTICS 
+
+--- Multiples of 5 (9 value(s)) ---
+Values:                     10        35        50       100        25        60         5        45        70
+Sum:                    400.00
+Average:                 44.44
+Median:                  45.00
+
+--- Multiples of 7 (6 value(s)) ---
+Values:                     21        14        49        28         7        63
+Sum:                    182.00
+Average:                 30.33
+Median:                  24.50
+
+--- Neither (other) (5 value(s)) ---
+Values:                      8        17        33        18        39
+Sum:                    115.00
+Average:                 23.00
+Median:                  18.00
+
+ ARRAYS SORTED DESCENDING 
+
+--- Multiples of 5 sorted (descending) (9 value(s)) ---
+Values:                    100        70        60        50        45        35        25        10         5
+
+--- Multiples of 7 sorted (descending) (6 value(s)) ---
+Values:                     63        49        28        21        14         7
+
+--- Neither (other) sorted (descending) (5 value(s)) ---
+Values:                     39        33        18        17         8
+
+ ARRAYS SORTED DESCENDING 
+
+--- Multiples of 5 sorted (descending) (9 value(s)) ---
+Values:                    100        70        60        50        45        35        25        10         5
+
+--- Multiples of 7 sorted (descending) (6 value(s)) ---
+Values:                     63        49        28        21        14         7
+
+--- Neither (other) sorted (descending) (5 value(s)) ---
+Values:                     39        33        18        17         8
+
+ ARRAY CONTENTS AND STATISTICS 
+
+--- Multiples of 5 (9 value(s)) ---
+Values:                     10        35        50       100        25        60         5        45        70
+Sum:                    400.00
+Average:                 44.44
+Median:                  45.00
+
+--- Multiples of 7 (6 value(s)) ---
+Values:                     21        14        49        28         7        63
+Sum:                    182.00
+Average:                 30.33
+Median:                  24.50
+
+--- Neither (other) (5 value(s)) ---
+Values:                      8        17        33        18        39
+Sum:                    115.00
+Average:                 23.00
+Median:                  18.00
+
+Quitting program. Goodbye!
