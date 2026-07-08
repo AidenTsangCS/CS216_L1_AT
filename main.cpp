@@ -1,3 +1,6 @@
+//Aiden Tsang
+//Lab #1
+
 #include <iostream>
 #include <iomanip>
 #include <string>
