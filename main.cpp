@@ -8,8 +8,8 @@
 #include <fstream>
 using namespace std;
 
-const string INPUT_FILE = "in_numberList.txt";
-const string OUTPUT_FILE = "out_userChoices.txt";
+const string INPUT_FILE = "in_numberlist.txt";
+const string OUTPUT_FILE = "out_userchoices.txt";
 const int MAX_SIZE = 100;
 const int COL_WIDTH = 10;
 
